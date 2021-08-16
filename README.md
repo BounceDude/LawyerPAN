@@ -4,7 +4,7 @@ Source code and dataset for the paper *LawyerPAN: A Proficiency Assessment Netwo
 
 The code is the implementation of LawyerPAN model, and the dataset is collected from the 51djl.com.
 
-We will release the full source code and data when the paper becomes public.
+We will release the full source code and data soon.
 
 If this code helps with your studies, please kindly cite the following publication:
 
