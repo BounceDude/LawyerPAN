@@ -10,9 +10,10 @@ If this code helps with your studies, please kindly cite the following publicati
 
 ```
 @inproceedings{an2021lawyerpan,
-  title={LawyerPAN: A Proficiency Assessment Network for Trial Lawyers},
+  title={Lawyerpan: A proficiency assessment network for trial lawyers},
   author={An, Yanqing and Liu, Qi and Wu, Han and Zhang, Kai and Yue, Linan and Cheng, Mingyue and Zhao, Hongke and Chen, Enhong},
-  booktitle={Proceedings of the 27th ACM SIGKDD International Conference on Knowledge Discovery \& Data Mining},
+  booktitle={Proceedings of the 27th ACM SIGKDD Conference on Knowledge Discovery \& Data Mining},
+  pages={5--13},
   year={2021}
 }
 ```
