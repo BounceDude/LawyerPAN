@@ -7,8 +7,7 @@ import json
 
 
 class LawyerPAN(nn.Module):
-    def __init__(self, lawyer_n, case_n, field_n, batch_size, device, freeze_bert=False,
-                 model_name='bert-base-chinese', hidden_size=768):
+    def __init__(self, lawyer_n, case_n, field_n, batch_size, device, hidden_size=768):
         super(LawyerPAN, self).__init__()
 
         self.field_dim = field_n
@@ -48,7 +47,7 @@ class LawyerPAN(nn.Module):
         '''
         # before prednet
         self.batch_size = len(lawy_id)
-        stu_emb = torch.sigmoid(self.lawyer_emb(lawy_id))
+        lawy_emb = torch.sigmoid(self.lawyer_emb(lawy_id))
         plaintiff_emb = torch.sigmoid(self.team_concat(pla_emb))
         defendant_emb = torch.sigmoid(self.team_concat(def_emb))
         plaintiff_diff = torch.sigmoid(self.LC1(facts_encode))
@@ -58,7 +57,7 @@ class LawyerPAN(nn.Module):
 
         # prednet
         factions = factions.unsqueeze(1)
-        input_x_i = (plaintiff_discr * (1 - factions) + defendant_discr * factions) * (stu_emb - plaintiff_diff * (1 - factions) - defendant_diff * factions) * field_id
+        input_x_i = (plaintiff_discr * (1 - factions) + defendant_discr * factions) * (lawy_emb - plaintiff_diff * (1 - factions) - defendant_diff * factions) * field_id
         adversary = plaintiff_emb - plaintiff_diff - defendant_emb + defendant_diff
         input_x_g = (plaintiff_discr * (1 - factions) + defendant_discr * factions) * (adversary * (1 - factions) - adversary * factions) * field_id
         input_x = torch.cat([input_x_i, input_x_g * torch.pow(-1, factions)], 1)
@@ -97,6 +96,10 @@ class LawyerPAN(nn.Module):
         self.prednet_full2.apply(clipper)
         self.prednet_full3.apply(clipper)
         self.text_attn.fc.apply(clipper)
+
+    def get_lawyer_proficiency(self, stu_id):
+        prof_emb = torch.sigmoid(self.lawyer_emb(lawy_id))
+        return prof_emb.data
 
 
 class Attention(nn.Module):
