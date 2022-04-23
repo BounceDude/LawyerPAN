@@ -42,11 +42,11 @@ class LawDataLoader(object):
         for count in range(self.batch_size):
             log = self.data[self.ptr + count]
             field_emb = [0.] * self.field_dim
-            for field_code in log['knowledge_code']:
+            for field_code in log['field_code']:
                 field_emb[field_code - 1] = 1.0
             y = log['score']
             input_lawy_ids.append(log['user_id'] - 1)
-            input_case_ids.append(log['exer_id'] - 1)
+            input_case_ids.append(log['item_id'] - 1)
             input_field_embs.append(field_emb)
             pla_num = 0
             def_num = 0
@@ -74,8 +74,8 @@ class LawDataLoader(object):
                 def_emb.append(0)
             
             
-            # fact_encode = self.facts_dict[self.idx2case[log['exer_id']]]
-            fact_encode = self.facts_dict[str(log['exer_id'])]
+            # fact_encode = self.facts_dict[self.idx2case[log['item_id']]]
+            fact_encode = self.facts_dict[str(log['item_id'])]
             input_pla_nums.append(pla_num)
             input_def_nums.append(def_num)
             input_pla_embs.append(pla_emb)
@@ -131,8 +131,8 @@ class ValTestDataLoader(object):
         fact_max_len = 0
         cutoff_len = 500
         for log in logs:
-            # fact = self.facts_dict[self.idx2case[log['exer_id']]]
-            fact = self.facts_dict[str(log['exer_id'])]
+            # fact = self.facts_dict[self.idx2case[log['item_id']]]
+            fact = self.facts_dict[str(log['item_id'])]
             if len(log['member']) > member_max_len:
                 member_max_len = len(log['member'])
             if len(fact) > fact_max_len:
@@ -142,11 +142,11 @@ class ValTestDataLoader(object):
                     fact_max_len = len(fact)
         for log in logs:
             field_emb = [0.] * self.field_dim
-            for field_code in log['knowledge_code']:
+            for field_code in log['field_code']:
                 field_emb[field_code - 1] = 1.0
             y = log['score']
             input_lawy_ids.append(user_id - 1)
-            input_case_ids.append(log['exer_id'] - 1)
+            input_case_ids.append(log['item_id'] - 1)
             input_field_embs.append(field_emb)
             pla_num = 0
             def_num = 0
@@ -172,8 +172,8 @@ class ValTestDataLoader(object):
                 pla_emb.append(0)
             for i in range(len(def_emb), member_max_len):
                 def_emb.append(0)
-            # fact = self.facts_dict[self.idx2case[log['exer_id']]]
-            fact = self.facts_dict[str(log['exer_id'])]
+            # fact = self.facts_dict[self.idx2case[log['item_id']]]
+            fact = self.facts_dict[str(log['item_id'])]
             encoded_pair = self.tokenizer(fact, padding='max_length', truncation=True, max_length=cutoff_len, return_tensors='pt')
             token_id = encoded_pair['input_ids'].squeeze(0).numpy().tolist()
             attn_mask = encoded_pair['attention_mask'].squeeze(0).numpy().tolist()

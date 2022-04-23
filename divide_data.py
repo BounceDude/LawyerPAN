@@ -44,14 +44,14 @@ def divide_data(data_path):
         test_set.append(lawy_test)
         # shuffle logs in train_slice together, get train_set
         for log in lawy_train['logs']:
-            train_set.append({'user_id': user_id, 'exer_id': log['exer_id'], 'score': log['score'], 'knowledge_code': log['knowledge_code'],
-                              'tag': log['tag'], 'member': log['member'], 'expertise': log['expertise']})
+            train_set.append({'user_id': user_id, 'item_id': log['item_id'], 'score': log['score'], 'field_code': log['field_code'],
+                              'tag': log['tag'], 'member': log['member']})
         for log in lawy_val['logs']:
-            val_slice.append({'user_id': user_id, 'exer_id': log['exer_id'], 'score': log['score'], 'knowledge_code': log['knowledge_code'],
-                              'tag': log['tag'], 'member': log['member'], 'expertise': log['expertise']})
+            val_slice.append({'user_id': user_id, 'item_id': log['item_id'], 'score': log['score'], 'field_code': log['field_code'],
+                              'tag': log['tag'], 'member': log['member']})
         for log in lawy_test['logs']:
-            test_slice.append({'user_id': user_id, 'exer_id': log['exer_id'], 'score': log['score'], 'knowledge_code': log['knowledge_code'],
-                              'tag': log['tag'], 'member': log['member'], 'expertise': log['expertise']})
+            test_slice.append({'user_id': user_id, 'item_id': log['item_id'], 'score': log['score'], 'field_code': log['field_code'],
+                              'tag': log['tag'], 'member': log['member']})
     random.shuffle(train_set)
     with open(data_path + 'train_slice.json', 'w', encoding='utf8') as output_file:
         json.dump(train_slice, output_file, indent=4, ensure_ascii=False)
@@ -62,7 +62,7 @@ def divide_data(data_path):
     with open(data_path + 'train_set.json', 'w', encoding='utf8') as output_file:
         json.dump(train_set, output_file, indent=4, ensure_ascii=False)
     with open(data_path + 'val_set.json', 'w', encoding='utf8') as output_file:
-        json.dump(val_set, output_file, indent=4, ensure_ascii=False)    # 直接用test_set作为val_set
+        json.dump(val_set, output_file, indent=4, ensure_ascii=False)
     with open(data_path + 'test_set.json', 'w', encoding='utf8') as output_file:
         json.dump(test_set, output_file, indent=4, ensure_ascii=False)
 
