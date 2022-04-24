@@ -1,0 +1,4 @@
+[data]
+user_num = 26430
+item_num = 193444
+field_num = 520
