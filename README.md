@@ -20,7 +20,7 @@ Train the model:
 
 The LCHR-small dataset has been uploaded to Baidu Cloud 
 
-`https://pan.baidu.com/s/1rvzhPgwQHBVC6UVeba8mwQ TOKEN：g2o2`
+`https://pan.baidu.com/s/1P51F08St822aiJu_kKhRrQ TOKEN：5dk2`
 
 - log_data.json: The log data is organized in the structure:
 
